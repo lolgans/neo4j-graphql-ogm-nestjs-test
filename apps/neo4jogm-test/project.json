@@ -1,0 +1,52 @@
+{
+  "name": "neo4jogm-test",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/neo4jogm-test/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/neo4jogm-test",
+        "main": "apps/neo4jogm-test/src/main.ts",
+        "tsConfig": "apps/neo4jogm-test/tsconfig.app.json",
+        "assets": ["apps/neo4jogm-test/src/assets"],
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/market-api/src/environments/environment.ts",
+              "with": "apps/market-api/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "neo4jogm-test:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "neo4jogm-test:build:development"
+        },
+        "production": {
+          "buildTarget": "neo4jogm-test:build:production"
+        }
+      }
+    }
+  },
+  "tags": ["type:api"]
+}
